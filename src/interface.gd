@@ -1,5 +1,7 @@
 extends PanelContainer
 
+signal is_audio_playing(a_value: bool)
+
 const ALPHA_DISABLED: float = 0.7
 const PATH_ICONS: String = "res://assets/icons/%s"
 
@@ -57,7 +59,7 @@ func _on_exit_button_pressed() -> void:
 func _on_save_button_pressed() -> void:
 	var l_dialog: FileDialog = FileDialog.new()
 
-	l_dialog.title = "Save recording"
+	l_dialog.title = tr("TITLE_DIALOG_SAVE")
 	l_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
 	l_dialog.access = FileDialog.ACCESS_FILESYSTEM
 	l_dialog.use_native_dialog = true
@@ -89,11 +91,13 @@ func _on_play_button_pressed() -> void:
 		if !audio_playback.playing:
 			audio_playback.play()
 
+		is_audio_playing.emit(true)
 	else:
 		print("Pause audio playback")
 
 		button_play.texture_normal = ICON_PLAY
 		audio_playback.stream_paused = true
+		is_audio_playing.emit(false)
 
 
 func _on_recording_playback_finished() -> void:
@@ -127,6 +131,7 @@ func _on_record_button_pressed() -> void:
 
 		# Audio stuff
 		audio_playback.stop()
+		is_audio_playing.emit(false)
 
 		# Theming
 		panel_spectrum.modulate.a = 1.0

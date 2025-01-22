@@ -74,7 +74,7 @@ layout_mode = 2
 [node name="TitleLabel" type="Label" parent="VBox/TitleBar/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Audio Recorder"
+text = "TITLE_WINDOW"
 label_settings = SubResource("LabelSettings_or3wh")
 
 [node name="ExitButton" type="TextureButton" parent="VBox/TitleBar/HBox"]
@@ -96,6 +96,7 @@ theme_override_constants/v_separation = 6
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "TOOLTIP_BUTTON_RECORD"
 texture_normal = ExtResource("2_3mftk")
 ignore_texture_size = true
 stretch_mode = 5
@@ -104,6 +105,7 @@ stretch_mode = 5
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "TOOLTIP_BUTTON_PLAY"
 texture_normal = ExtResource("3_n777q")
 ignore_texture_size = true
 stretch_mode = 5
@@ -111,8 +113,9 @@ stretch_mode = 5
 [node name="SaveButton" type="Button" parent="VBox/HBox/HFlowContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "TOOLTIP_BUTTON_SAVE"
 theme_override_styles/normal = SubResource("StyleBoxFlat_388co")
-text = "Save"
+text = "BUTTON_SAVE"
 
 [node name="SpectrumPanel" type="PanelContainer" parent="VBox/HBox"]
 layout_mode = 2
@@ -120,9 +123,11 @@ size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_vsvvd")
 script = ExtResource("5_br4sw")
 
+[connection signal="is_audio_playing" from="." to="VBox/HBox/SpectrumPanel" method="_on_interface_is_audio_playing"]
 [connection signal="finished" from="RecordingPlayback" to="." method="_on_recording_playback_finished"]
 [connection signal="gui_input" from="VBox/TitleBar" to="." method="_on_title_bar_gui_input"]
 [connection signal="pressed" from="VBox/TitleBar/HBox/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="VBox/HBox/HFlowContainer/RecordButton" to="." method="_on_record_button_pressed"]
 [connection signal="pressed" from="VBox/HBox/HFlowContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="VBox/HBox/HFlowContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="resized" from="VBox/HBox/SpectrumPanel" to="VBox/HBox/SpectrumPanel" method="_on_resized"]
