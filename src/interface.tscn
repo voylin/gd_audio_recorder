@@ -1,0 +1,109 @@
+[gd_scene load_steps=10 format=3 uid="uid://cy0eoq0y6egng"]
+
+[ext_resource type="Texture2D" uid="uid://cd6km7wamr751" path="res://assets/icons/exit.svg" id="1_3lq65"]
+[ext_resource type="Texture2D" uid="uid://butmf7i7o0e0v" path="res://assets/icons/not_recording.svg" id="2_3mftk"]
+[ext_resource type="Texture2D" uid="uid://bnkikwj8lbvx" path="res://assets/icons/play.svg" id="3_n777q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v85qb"]
+content_margin_left = 3.0
+content_margin_top = 3.0
+content_margin_right = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.235294, 0.235294, 0.235294, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_26l7b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_upaec"]
+content_margin_left = 2.0
+content_margin_right = 2.0
+bg_color = Color(0.0980392, 0.0980392, 0.0980392, 1)
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_or3wh"]
+font_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_388co"]
+bg_color = Color(0.0980392, 0.0980392, 0.0980392, 1)
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vsvvd"]
+bg_color = Color(0.0980392, 0.0980392, 0.0980392, 1)
+corner_radius_bottom_right = 7
+
+[node name="Interface" type="PanelContainer"]
+clip_children = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_v85qb")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamMicrophone_26l7b")
+autoplay = true
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="TitleBar" type="PanelContainer" parent="VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_upaec")
+
+[node name="HBox" type="HBoxContainer" parent="VBox/TitleBar"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="VBox/TitleBar/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Audio Recorder"
+label_settings = SubResource("LabelSettings_or3wh")
+
+[node name="ExitButton" type="TextureButton" parent="VBox/TitleBar/HBox"]
+custom_minimum_size = Vector2(18, 0)
+layout_mode = 2
+texture_normal = ExtResource("1_3lq65")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HBox" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="HFlowContainer" type="HFlowContainer" parent="VBox/HBox"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_constants/v_separation = 6
+
+[node name="RecordButton" type="TextureButton" parent="VBox/HBox/HFlowContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_3mftk")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="PlayButton" type="TextureButton" parent="VBox/HBox/HFlowContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("3_n777q")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="SaveButton" type="Button" parent="VBox/HBox/HFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_388co")
+text = "Save"
+
+[node name="SpectrumPanel" type="PanelContainer" parent="VBox/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_vsvvd")
