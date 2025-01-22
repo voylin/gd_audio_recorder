@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cy0eoq0y6egng"]
+[gd_scene load_steps=12 format=3 uid="uid://cy0eoq0y6egng"]
 
 [ext_resource type="Texture2D" uid="uid://cd6km7wamr751" path="res://assets/icons/exit.svg" id="1_3lq65"]
+[ext_resource type="Script" path="res://interface.gd" id="1_a8j08"]
 [ext_resource type="Texture2D" uid="uid://butmf7i7o0e0v" path="res://assets/icons/not_recording.svg" id="2_3mftk"]
 [ext_resource type="Texture2D" uid="uid://bnkikwj8lbvx" path="res://assets/icons/play.svg" id="3_n777q"]
+[ext_resource type="Script" path="res://spectrum.gd" id="5_br4sw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v85qb"]
 content_margin_left = 3.0
@@ -36,7 +38,7 @@ corner_radius_bottom_left = 7
 bg_color = Color(0.0980392, 0.0980392, 0.0980392, 1)
 corner_radius_bottom_right = 7
 
-[node name="Interface" type="PanelContainer"]
+[node name="Interface" type="PanelContainer" node_paths=PackedStringArray("button_record", "button_play", "button_save", "panel_spectrum", "audio_playback")]
 clip_children = 2
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,10 +46,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_v85qb")
+script = ExtResource("1_a8j08")
+button_record = NodePath("VBox/HBox/HFlowContainer/RecordButton")
+button_play = NodePath("VBox/HBox/HFlowContainer/PlayButton")
+button_save = NodePath("VBox/HBox/HFlowContainer/SaveButton")
+panel_spectrum = NodePath("VBox/HBox/SpectrumPanel")
+audio_playback = NodePath("RecordingPlayback")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="RecordingPlayback" type="AudioStreamPlayer" parent="."]
+
+[node name="Microphone" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamMicrophone_26l7b")
 autoplay = true
+bus = &"Record"
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -107,3 +118,11 @@ text = "Save"
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_vsvvd")
+script = ExtResource("5_br4sw")
+
+[connection signal="finished" from="RecordingPlayback" to="." method="_on_recording_playback_finished"]
+[connection signal="gui_input" from="VBox/TitleBar" to="." method="_on_title_bar_gui_input"]
+[connection signal="pressed" from="VBox/TitleBar/HBox/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="VBox/HBox/HFlowContainer/RecordButton" to="." method="_on_record_button_pressed"]
+[connection signal="pressed" from="VBox/HBox/HFlowContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="VBox/HBox/HFlowContainer/SaveButton" to="." method="_on_save_button_pressed"]
