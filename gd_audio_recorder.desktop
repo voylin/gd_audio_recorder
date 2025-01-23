@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Godot Audio Recorder
+Comment=Record audio from your microphone
+Exec=/path/to/your/audio-recorder
+Icon=/path/to/your/icon.svg
+Terminal=false
+Type=Application
+Categories=AudioVideo;Audio;Recorder;
