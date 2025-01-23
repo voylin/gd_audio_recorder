@@ -1,7 +1,6 @@
 # Godot stuff
 .godot/
 .import/
-*.translation
 
 # Export files
 *.x86_64
