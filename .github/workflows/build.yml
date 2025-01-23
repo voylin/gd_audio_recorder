@@ -1,0 +1,87 @@
+name: Build audio recorder
+run-name: Build audio recorder
+on: workflow_dispatch
+
+env:
+  GODOT_VERSION: 4.3
+  GODOT_PROJECT_LOCATION: src/project.godot
+  EXPORT_FOLDER_LINUX: bin/linux
+  EXPORT_FOLDER_WINDOWS: bin/windows
+  EXPORT_FOLDER_MACOS: bin/macos
+  APPLICATION_NAME: GD_Audio_Recorder
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Installing dependencies
+        run: |
+          sudo apt update && sudo apt upgrade -y
+          sudo apt install -y git bash yasm python3 python3-pip scons gcc diffutils make wget unzip tar mingw-w64
+
+      - name: Checkout submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Copy custom.py
+        run: cp custom.py godot/custom.py
+
+      - name: Prepare Godot
+        run: |
+          wget -q -O godot_linux.zip https://github.com/godotengine/godot-builds/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64.zip
+          unzip godot_linux.zip
+          wget -q -O godot_export_templates.tpz https://github.com/godotengine/godot-builds/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_export_templates.tpz
+          mkdir -p ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable
+          unzip godot_export_templates.tpz -d ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable
+          mv ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable/templates/* ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable/
+
+      - name: Build export templates
+        run: |
+          cd godot
+          scons -j4 platform=linuxbsd lto=full
+          scons -j4 platform=windows
+
+      - name: Building release Linux
+        run: |
+          mkdir -p ${{ env.EXPORT_FOLDER_LINUX }}
+          ./Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64 --import ${{ env.GODOT_PROJECT_LOCATION }} --quiet --headless --export-release Linux ${{ env.MAIN_FOLDER }}/${{ env.EXPORT_FOLDER_LINUX }}/${{ env.APPLICATION_NAME }}.x86_64
+          chmod +x ${{ env.EXPORT_FOLDER_LINUX }}/${{ env.APPLICATION_NAME }}.x86_64
+      - name: Tar files
+        run: tar -cvf ${{ env.APPLICATION_NAME }}_linux_release_${{ env.DATE }}.tar ${{ env.EXPORT_FOLDER_LINUX }}
+
+      - name: Building release Windows
+        run: |
+          mkdir -p ${{ env.EXPORT_FOLDER_WINDOWS }}
+          ./Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64 --import ${{ env.GODOT_PROJECT_LOCATION }} --quiet --headless --export-release Windows ${{ env.MAIN_FOLDER }}/${{ env.EXPORT_FOLDER_WINDOWS }}/${{ env.APPLICATION_NAME }}.exe
+
+      - name: Building release MacOS
+        run: |
+          mkdir -p ${{ env.EXPORT_FOLDER_MACOS }}
+          ./Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64 --import ${{ env.GODOT_PROJECT_LOCATION }} --quiet --headless --export-release MacOS ${{ env.MAIN_FOLDER }}/${{ env.EXPORT_FOLDER_MACOS }}/${{ env.APPLICATION_NAME }}.zip
+
+      - name: Copy files
+        run: |
+          cp gd_audio_recorder.desktop ${{ env.EXPORT_FOLDER_LINUX }}
+          cp INSTRUCTIONS.md ${{ env.EXPORT_FOLDER_LINUX }}
+          cp INSTRUCTIONS.md ${{ env.EXPORT_FOLDER_WINDOWS }}
+          cp INSTRUCTIONS.md ${{ env.EXPORT_FOLDER_MACOS }}
+          cp LICENSE ${{ env.EXPORT_FOLDER_LINUX }}
+          cp LICENSE ${{ env.EXPORT_FOLDER_WINDOWS }}
+          cp LICENSE ${{ env.EXPORT_FOLDER_MACOS }}
+
+      - name: Uploading release Linux
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APPLICATION_NAME }}_linux_release_${{ env.DATE }}.tar
+          path: ${{ env.APPLICATION_NAME }}_linux_release_${{ env.DATE }}.tar
+      - name: Uploading release Windows
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APPLICATION_NAME }}_windows_release_${{ env.DATE }}
+          path: ${{ env.EXPORT_FOLDER_WINDOWS }}/
+      - name: Uploading release MacOS
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APPLICATION_NAME }}_macos_release_${{ env.DATE }}
+          path: ${{ env.EXPORT_FOLDER_MACOS }}/
