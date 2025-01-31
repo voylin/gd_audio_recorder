@@ -11,6 +11,10 @@ config_version=5
 [application]
 
 config/name="Audio Recorder"
+config/name_localized={
+"ja": "オーディオレコーダー",
+"nl": "Audiorecorder"
+}
 config/description="An audio recorder made with Godot."
 config/version="1.0"
 run/main_scene="res://interface.tscn"
