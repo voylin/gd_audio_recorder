@@ -3,7 +3,6 @@
 target = "template_release"
 production = "yes"
 optimize = "size"
-lto = "auto"
 module_basis_universal_enabled = "no"
 module_bmp_enabled = "no"
 module_camera_enabled = "no"

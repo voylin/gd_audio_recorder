@@ -41,6 +41,10 @@ jobs:
           cp LICENSE ${{ env.EXPORT_FOLDER_LINUX }}
           cp LICENSE ${{ env.EXPORT_FOLDER_WINDOWS }}
           cp LICENSE ${{ env.EXPORT_FOLDER_MACOS }}
+          cp src/icon.svg ${{ env.EXPORT_FOLDER_LINUX }}
+          cp src/icon.svg ${{ env.EXPORT_FOLDER_WINDOWS }}
+          cp src/icon.svg ${{ env.EXPORT_FOLDER_MACOS }}
+
 
       - name: Prepare Godot
         run: |
@@ -54,8 +58,8 @@ jobs:
       - name: Build export templates
         run: |
           cd godot
-          scons -j4 platform=linuxbsd
-          scons -j4 platform=windows
+          scons -j4 platform=linuxbsd lto=full
+          scons -j4 platform=windows lto=none
           cd ..
 
       - name: Building release Linux
