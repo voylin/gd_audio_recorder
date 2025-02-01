@@ -22,3 +22,4 @@ The save button will bring up a dialog to save the recorded audio to a file on y
 ## How to install on Linux
 
 Put the '.desktop' inside of '.local/share/applications/' and adjust the path for both the icon and executable.
+

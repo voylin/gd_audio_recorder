@@ -1,9 +1,12 @@
-# Copy this file into the godot folder and compile with
-# 'scons -j11 platform = "linuxbsd'
+# Copy this file into the 'godot' folder to get a smaller export size.
 
 target = "template_release"
-disable_3d = "yes"
+production = "yes"
+optimize = "size"
+lto = "auto"
+module_basis_universal_enabled = "no"
 module_bmp_enabled = "no"
+module_camera_enabled = "no"
 module_csg_enabled = "no"
 module_dds_enabled = "no"
 module_enet_enabled = "no"
@@ -15,7 +18,7 @@ module_mbedtls_enabled = "no"
 module_meshoptimizer_enabled = "no"
 module_minimp3_enabled = "no"
 module_mobile_vr_enabled = "no"
-module_msdfgen_enabled = "no"
+module_msdfgen_enabled= "no"
 module_multiplayer_enabled = "no"
 module_noise_enabled = "no"
 module_navigation_enabled = "no"
@@ -34,7 +37,4 @@ module_webrtc_enabled = "no"
 module_websocket_enabled = "no"
 module_webxr_enabled = "no"
 module_zip_enabled = "no"
-tools = "no"
-debug_symbols = "no"
-module_mono_enabled = "no"
-optimize = "size"
+
