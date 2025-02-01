@@ -18,6 +18,7 @@ The save button will bring up a dialog to save the recorded audio to a file on y
   - English: [Voylin](https://www.youtube.com/@voylinsgamedevjourney);
   - Dutch: [Voylin](https://www.youtube.com/@voylinsgamedevjourney);
   - Japanese: [Voylin](https://www.youtube.com/@voylinsgamedevjourney);
+  - French: Slander;
 
 ## How to install on Linux
 

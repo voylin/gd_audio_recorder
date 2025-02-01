@@ -1,7 +1,7 @@
-KEY,en,nl,ja
-TITLE_WINDOW,Audio recorder,Audiorecorder,オーディオレコーダー
-TITLE_DIALOG_SAVE,Save recording,Opname opslaan,録音を保存
-BUTTON_SAVE,Save,Opslaan,保存
-TOOLTIP_BUTTON_SAVE,Save your audio recording,De laatste opname opslaan,現在の録音を保存
-TOOLTIP_BUTTON_PLAY,Play/pause the previously recorded audio,Afspelen/pauzeren van opname,録音の再生/一時停止
-TOOLTIP_BUTTON_RECORD,Start/stop recording your microphone,Start/stop met opnemen,録音の開始/停止
+KEY,en,nl,ja,fr
+TITLE_WINDOW,Audio recorder,Audiorecorder,オーディオレコーダー,Enregistreur audio
+TITLE_DIALOG_SAVE,Save recording,Opname opslaan,録音を保存,Sauver l'enregistrement
+BUTTON_SAVE,Save,Opslaan,保存,Sauver
+TOOLTIP_BUTTON_SAVE,Save your audio recording,De laatste opname opslaan,現在の録音を保存,Sauvegarde de votre enregistrement audio
+TOOLTIP_BUTTON_PLAY,Play/pause the previously recorded audio,Afspelen/pauzeren van opname,録音の再生/一時停止,Lecture/pause de l'enregistrement audio précédemment capturé
+TOOLTIP_BUTTON_RECORD,Start/stop recording your microphone,Start/stop met opnemen,録音の開始/停止,Démarrer/arrêter la capture du microphone
