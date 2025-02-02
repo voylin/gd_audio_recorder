@@ -1,6 +1,6 @@
 # Audio recorder - made in Godot
 
-This project is part of a series for the YouTube channel [Voylin's Gamedev Journey](https://www.youtube.com/@voylinsgamedevjourney). The tutorial videos can be found here: [Audio recorder - made in Godot tutorial playlist](https://www.youtube.com/playlist?list=PL8opQePBSY5m0vVrozSjWXlWLXUpT_f1I).
+This project is part of a series for the YouTube channel [Voylin's Gamedev Journey](https://www.youtube.com/@voylinsgamedevjourney). The tutorial videos can be found here: [Audio recorder - made in Godot tutorial playlist](https://www.youtube.com/playlist?list=PL8opQePBSY5ny0BfqIp_WqYoOLhmhKvLM).
 
 ## Why an audio recorder?
 
